@@ -257,12 +257,19 @@ footer .addr a:hover{color:var(--blush)}
   .nav-links a{padding:1rem 7vw;width:100%}
   .nav-links a.cta{margin:.7rem 7vw;text-align:center}
   .burger{display:block}
-  /* No marquee on phones — it becomes a plain two-up grid. */
-  .marquee,.js .marquee{overflow:visible;margin-bottom:10px}
-  .marquee-track{display:block;width:auto;animation:none!important}
-  .marquee-group{display:grid;grid-template-columns:1fr 1fr;gap:10px;
-    padding:0 4vw;margin-bottom:10px}
+  /* No marquee on phones — it becomes one continuous two-up grid.
+     Each desktop row holds 7 photos, so giving each row its own grid left a
+     lone photo and an empty cell at the end of both. The row wrappers are
+     dissolved (display:contents) so all 14 tiles flow together as 7 pairs. */
+  .gallery{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;
+    padding:34px 4vw 60px}
+  .marquee,.js .marquee,.marquee-track,.marquee-group{display:contents}
+  .marquee-track{animation:none!important}
   .marquee-group.clone{display:none}
+  /* names block spans both columns; width and spacing match the old layout
+     (54px below the photos = 10px grid gap + 44px) */
+  .gallery .wrap{grid-column:1/-1;width:auto;margin:0 -1vw}
+  .gallery .namesline{margin-top:44px}
   /* 1:1 squares badly cropped the portrait shots; 4:5 is far kinder */
   .tile{height:auto;width:auto;border-width:5px;aspect-ratio:4/5!important}
   .details-grid{grid-template-columns:1fr;gap:2.2rem}
@@ -434,6 +441,8 @@ footer .addr a:hover{color:var(--blush)}
           <p><strong>Dress code:</strong> <span class="dress">Formal</span></p>
           <p style="margin-top:.85rem">Ceremony seating is limited. Your invitation specifies which events
              you're invited to — please RSVP only for those.</p>
+          <p style="margin-top:.85rem"><strong>Adults only:</strong> Although we love your children dearly,
+             this is a no-kids wedding. Thank you for understanding.</p>
         </div>
         <div style="margin-top:1.4rem;text-align:center">
           <button class="ghost-btn" id="addCal" type="button">Add to Calendar</button>
